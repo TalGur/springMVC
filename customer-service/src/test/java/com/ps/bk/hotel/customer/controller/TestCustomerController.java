@@ -38,9 +38,10 @@ public class TestCustomerController {
 	@Test
 	public void testSuccessfulFindAllCustomers() throws Exception {
 		when(service.findAllCustomers()).thenReturn(Arrays.asList(new Customer(), new Customer()));
-		mockMvc.perform(get("/customers")).andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(jsonPath("$", hasSize(2)));
+		mockMvc.perform(get("/customers"))
+						.andExpect(status().isOk())
+						.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+						.andExpect(jsonPath("$", hasSize(2)));
 	}
 
 	@Test
@@ -55,8 +56,9 @@ public class TestCustomerController {
 
 	@Test
 	public void testMissingParamSearchCustomersByFNameLName() throws Exception {
-		mockMvc.perform(get("/customers/search/byFNameLName?fName=test")).andExpect(status().isBadRequest())
-				.andExpect(content().string(""));
+		mockMvc.perform(get("/customers/search/byFNameLName?fName=test"))
+						.andExpect(status().isBadRequest())
+						.andExpect(content().string(""));
 		verify(service, times(0)).findCustomersByFNameLName(any(), any());
 	}
 
